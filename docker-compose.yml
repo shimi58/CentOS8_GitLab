@@ -1,0 +1,18 @@
+version: '3'
+services:
+  centos8:
+    container_name: "centos8"
+    build: ./
+    tty: true
+    privileged: true
+    command: /sbin/init   
+    ports:
+      - "2222:22"
+      - "9080:9080" #GitLab用
+      - "9081:9081" #GitLabMattermost用
+      - '10443:443'
+    volumes:
+      # 公式に則って永続化
+      - './srv/gitlab/config:/etc/gitlab'   #GitLab定義ファイルを配置
+      - './srv/gitlab/logs:/var/log/gitlab' #GItLabログファイル出力
+      - './srv/gitlab/data:/var/opt/gitlab' #GItLabデータ格納
